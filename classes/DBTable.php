@@ -151,6 +151,28 @@ class DBTable extends DMObject{
 		}
 		return $result;
 	}
+
+	function getTableRowsCount() {
+		$db = DBMysql::getInstance();
+
+		$query = "
+			SELECT COUNT(*)
+			FROM `{$this->table}`
+		";
+		if ($this->where_conditions) {
+			$query .= ' WHERE '.$this->getWhereStr();
+		}
+
+		$db->setQuery( $query );
+		$result = $db->getResult();
+
+		if ($result === false) {
+			$this->errors[] = $db->getError();
+			return false;
+		}
+
+		return $result;
+	}
 	
 /*	
 	function isTableExists() {

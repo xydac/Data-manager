@@ -11,7 +11,7 @@ include_once DM_PATH.DS.'classes'.DS.'DMRenderer.php';
 class DataManager extends DBTable{
 	private $mode = '';
 	private $page = 1;
-	private $items_per_page = 0;
+	private $items_per_page = 20;
 	private $key_value = 0;
 	private $titles = array();
 	private $rendered_fields = array();
@@ -224,6 +224,15 @@ class DataManager extends DBTable{
 		$renderer->afterSaveEvent($this->key_value);
 
 		return $result;
+	}
+
+	function getPagesCount() {
+		$rows_count = $this->getTableRowsCount();
+		if($rows_count === false) {
+			return false;
+		}
+
+		return ceil($rows_count / $this->items_per_page);
 	}
 
 	function setFieldsPrefix($prefix) {

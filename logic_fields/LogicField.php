@@ -21,7 +21,7 @@ class LogicField extends DMObject {
 		if (!$link) {
 			return DM_BASE_URL;
 		}
-		if ($link[0] == '/') {
+		if (DM_BASE_URL && $link[0] == '/') {
 			$link = substr($link, 1);
 		}
 		return DM_BASE_URL.$link;
